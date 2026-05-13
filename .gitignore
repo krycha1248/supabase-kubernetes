@@ -1,0 +1,6 @@
+.terraform
+terraform.tfstate
+variables.sh
+.terraform.lock.hcl
+.ansible
+age.key
