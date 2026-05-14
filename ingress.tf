@@ -4,7 +4,7 @@ resource "helm_release" "ingress_nginx" {
   chart      = "ingress-nginx"
   namespace  = "ingress-nginx"
   create_namespace = true
-  depends_on = [ ovh_cloud_project_gateway.gw ]
+  depends_on = [ ovh_cloud_project_kube_nodepool.node_pool ]
   timeout = 1800
 
   values = [
