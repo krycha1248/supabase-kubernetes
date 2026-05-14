@@ -1,5 +1,5 @@
 resource "kubernetes_namespace_v1" "supabase" {
-  depends_on = [ ovh_cloud_project_kube_nodepool.node_pool ]
+  depends_on = [ helm_release.ingress_nginx ]
   metadata {
     name = "supabase"
   }
