@@ -2,10 +2,9 @@ resource "helm_release" "supabase" {
   name       = "supabase"
   repository = "https://supabase-community.github.io/supabase-kubernetes"
   chart      = "supabase"
-
   namespace = kubernetes_namespace_v1.supabase.metadata[0].name
-
   timeout = 1200
+
   values = [templatefile("${path.module}/values.yaml.tpl", {
     domain      = var.domain
     supa_user   = var.supa_user
