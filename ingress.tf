@@ -4,6 +4,7 @@ resource "helm_release" "ingress_nginx" {
   chart      = "ingress-nginx"
   namespace  = "ingress-nginx"
   create_namespace = true
+  depends_on = [ ovh_cloud_project_gateway.gw ]
 
   values = [
     yamlencode({
@@ -14,14 +15,11 @@ resource "helm_release" "ingress_nginx" {
       }
     })
   ]
-  depends_on = [ ovh_cloud_project_kube_nodepool.node_pool ]
 }
 
 data "kubernetes_service" "ingress_nginx" {
   metadata {
     name      = "ingress-nginx-controller"
-    namespace = "ingress-nginx"
+    namespace = helm_release.ingress_nginx.namespace
   }
-
-  depends_on = [helm_release.ingress_nginx]
 }

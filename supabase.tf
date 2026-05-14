@@ -1,3 +1,9 @@
+resource "kubernetes_namespace_v1" "supabase" {
+  metadata {
+    name = "supabase"
+  }
+}
+
 resource "helm_release" "supabase" {
   name       = "supabase"
   repository = "https://supabase-community.github.io/supabase-kubernetes"
@@ -13,5 +19,4 @@ resource "helm_release" "supabase" {
     service_key = jwt_hashed_token.service.token
     jwt_secret  = random_password.jwt_secret.result
   })]
-  depends_on = [helm_release.ingress_nginx]
 }
