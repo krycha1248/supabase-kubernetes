@@ -5,7 +5,6 @@ resource "helm_release" "ingress_nginx" {
   namespace  = "ingress-nginx"
   create_namespace = true
   depends_on = [ ovh_cloud_project_kube_nodepool.node_pool ]
-  timeout = 1800
 
   values = [
     yamlencode({
