@@ -1,16 +1,27 @@
 resource "ovh_cloud_project_kube" "kubernetes_cluster" {
   service_name = var.ovh_service_name
-  name         = "Kubernetes Cluster"
+  name         = "supabase"
   region       = "WAW1"
+
+  private_network_id = tolist(
+    ovh_cloud_project_network_private.net.regions_attributes[*].openstackid
+  )[0]
+
+  nodes_subnet_id = ovh_cloud_project_network_private_subnet.subnet.id
+
+  private_network_configuration {
+    private_network_routing_as_default = true
+    default_vrack_gateway              = "192.168.0.1"
+  }
 }
 
-resource "ovh_cloud_project_kube_nodepool" "node_pool_d2_4" {
+resource "ovh_cloud_project_kube_nodepool" "node_pool" {
   service_name  = var.ovh_service_name
   kube_id       = ovh_cloud_project_kube.kubernetes_cluster.id
-  name          = "workers-d2-4"
-  flavor_name   = "d2-4"
+  name          = "workers-d2-8"
+  flavor_name   = "d2-8"
   autoscale     = true
   desired_nodes = 1
-  max_nodes     = 2
+  max_nodes     = 1
   min_nodes     = 1
 }

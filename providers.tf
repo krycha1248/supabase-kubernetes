@@ -23,7 +23,7 @@ terraform {
     }
 
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "~> 2.25"
     }
 
@@ -33,6 +33,14 @@ terraform {
 
     kubectl = {
       source = "gavinbunney/kubectl"
+    }
+
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+    }
+
+    jwt = {
+      source  = "geektheripper/jwt"
     }
   }
 }

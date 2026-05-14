@@ -27,3 +27,8 @@ jobs:
           OVH_APPLICATION_KEY: ${{ secrets.OVH_APPLICATION_KEY }}
           OVH_APPLICATION_SECRET: ${{ secrets.OVH_APPLICATION_SECRET }}
           OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          TF_VAR_domain: ${{ secrets.DOMAIN }}
+          TF_VAR_supa_user: ${{ secrets.SUPA_USER }}
+          TF_VAR_supa_pass: ${{ secrets.SUPA_PASS }}

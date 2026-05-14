@@ -3,8 +3,21 @@ variable "ovh_service_name" {
   sensitive = true
 }
 
+variable "cloudflare_zone_id" {
+  type      = string
+  sensitive = true
+}
+
 variable "domain" {
-  default = "supabase.local"
-  type = string
+  type    = string
+}
+
+variable "supa_user" {
+  type      = string
+  sensitive = true
+}
+
+variable "supa_pass" {
+  type      = string
   sensitive = true
 }
