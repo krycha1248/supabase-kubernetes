@@ -23,7 +23,7 @@ resource "ovh_cloud_project_gateway" "gw" {
   service_name = var.ovh_service_name
   name         = "supabase-gw"
   model        = "s"
-  region       = "WAW1"
+  region       = ovh_cloud_project_network_private_subnet.subnet.region
 
   network_id = tolist(
     ovh_cloud_project_network_private.net.regions_attributes[*].openstackid
