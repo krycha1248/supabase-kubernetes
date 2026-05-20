@@ -40,7 +40,7 @@ terraform {
     }
 
     jwt = {
-      source  = "geektheripper/jwt"
+      source = "geektheripper/jwt"
     }
   }
 }

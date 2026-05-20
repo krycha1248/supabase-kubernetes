@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     concurrency:
       group: kubernetes
       cancel-in-progress: false
@@ -32,3 +32,4 @@ jobs:
           TF_VAR_domain: ${{ secrets.DOMAIN }}
           TF_VAR_supa_user: ${{ secrets.SUPA_USER }}
           TF_VAR_supa_pass: ${{ secrets.SUPA_PASS }}
+          TF_VAR_email: ${{ secrets.EMAIL }}

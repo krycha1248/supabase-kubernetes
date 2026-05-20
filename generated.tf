@@ -4,7 +4,8 @@ resource "random_password" "jwt_secret" {
 }
 
 resource "jwt_hashed_token" "anon" {
-  secret = random_password.jwt_secret.result
+  secret    = random_password.jwt_secret.result
+  algorithm = "HS256"
 
   claims_json = jsonencode({
     role = "anon"
@@ -15,7 +16,8 @@ resource "jwt_hashed_token" "anon" {
 }
 
 resource "jwt_hashed_token" "service" {
-  secret = random_password.jwt_secret.result
+  secret    = random_password.jwt_secret.result
+  algorithm = "HS256"
 
   claims_json = jsonencode({
     role = "service_role"

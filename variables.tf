@@ -9,7 +9,7 @@ variable "cloudflare_zone_id" {
 }
 
 variable "domain" {
-  type    = string
+  type = string
 }
 
 variable "supa_user" {
@@ -18,6 +18,11 @@ variable "supa_user" {
 }
 
 variable "supa_pass" {
+  type      = string
+  sensitive = true
+}
+
+variable "email" {
   type      = string
   sensitive = true
 }

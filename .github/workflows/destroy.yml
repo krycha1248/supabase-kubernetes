@@ -29,3 +29,4 @@ jobs:
           TF_VAR_domain: ${{ secrets.DOMAIN }}
           TF_VAR_supa_user: ${{ secrets.SUPA_USER }}
           TF_VAR_supa_pass: ${{ secrets.SUPA_PASS }}
+          TF_VAR_email: ${{ secrets.EMAIL }}

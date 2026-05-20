@@ -164,16 +164,16 @@ secret:
   ## S3-compatible credentials
   ##
   s3:
-    keyId: "625729a08b95bf1b7ff351a663f3a23c"
-    accessKey: "850181e4652dd023b7a98c58ae0d2d34bd487ee0cc3254aed6eda37307425907"
+  #  keyId: "625729a08b95bf1b7ff351a663f3a23c"
+  #  accessKey: "850181e4652dd023b7a98c58ae0d2d34bd487ee0cc3254aed6eda37307425907"
 
     ## Reference to existing secret
-    # secretRef: ""
+    secretRef: "supabase-s3"
 
     ## Map to actual keys inside secretRef if they differ
-    # secretRefKey:
-    #   keyId: keyId
-    #   accessKey: accessKey
+    secretRefKey:
+      keyId: AWS_ACCESS_KEY_ID
+      accessKey: AWS_SECRET_ACCESS_KEY
 
   ## Realtime service
   ## Docs: https://supabase.com/docs/guides/realtime
@@ -639,10 +639,10 @@ environment:
     DB_DRIVER: postgres
     ## SSL mode options: disable, allow, prefer, require, verify-ca, verify-full
     DB_SSL: disable
-    API_EXTERNAL_URL: http://supabase.local
+    API_EXTERNAL_URL: https://${domain}
     GOTRUE_API_HOST: "0.0.0.0"
     GOTRUE_API_PORT: "9999"
-    GOTRUE_SITE_URL: http://supabase.local
+    GOTRUE_SITE_URL: https://${domain}
     GOTRUE_URI_ALLOW_LIST: "*"
     GOTRUE_DISABLE_SIGNUP: "false"
     GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
@@ -757,10 +757,17 @@ environment:
     REQUEST_ALLOW_X_FORWARDED_PATH: "true"
     FILE_SIZE_LIMIT: "52428800"
     FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+    STORAGE_BACKEND: s3
     TENANT_ID: stub
-    REGION: stub
-    GLOBAL_S3_BUCKET: stub
+    REGION: ${s3_region}
+    GLOBAL_S3_BUCKET: ${s3_storage_name}
+    GLOBAL_S3_PROTOCOL: ${s3_protocol}
+    GLOBAL_S3_ENDPOINT: ${s3_endpoint}
+    GLOBAL_S3_FORCE_PATH_STYLE: "true"
+    AWS_DEFAULT_REGION: ${s3_region}
     ENABLE_IMAGE_TRANSFORMATION: "true"
+    STORAGE_PUBLIC_URL: "https://${domain}"
+    API_EXTERNAL_URL: "https://${domain}"
 
   studio:
     HOSTNAME: "::"
@@ -768,7 +775,7 @@ environment:
     POSTGRES_PORT: 5432
     DEFAULT_ORGANIZATION_NAME: Default Organization
     DEFAULT_PROJECT_NAME: Default Project
-    SUPABASE_PUBLIC_URL: http://${domain}
+    SUPABASE_PUBLIC_URL: https://${domain}
     NEXT_PUBLIC_ENABLE_LOGS: true
     ## Set value to bigquery to use Big Query backend for analytics (postgres or bigquery)
     NEXT_ANALYTICS_BACKEND_PROVIDER: postgres
@@ -1053,16 +1060,17 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
     nginx.ingress.kubernetes.io/rewrite-target: /
-    # cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     # kubernetes.io/tls-acme: "true"
-  tls: []
+  tls:
     ## Define TLS secret for SSL termination.
     ## This section can be left blank if using cluster certificate manager.
     ## Otherwise, setting this in tandem with certificate manager will overwrite the secret name.
-    # - secretName: example-com-tls
-    #   hosts:
-    #     - example.com
+    - secretName: supabase-tls
+      hosts:
+        - ${domain}
   hosts:
     - host: ${domain}
       paths:
