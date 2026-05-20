@@ -829,7 +829,7 @@ persistence:
       - ReadWriteOnce
 
   storage:
-    enabled: true
+    enabled: false
     storageClassName: ""
     # existingClaim: ""
     annotations: {}
